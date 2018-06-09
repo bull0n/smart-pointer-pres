@@ -1,6 +1,8 @@
 
 @div[left-50]
+
 # Smart Pointers
+
 Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 @divend
 
