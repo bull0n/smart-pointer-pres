@@ -1,6 +1,6 @@
 # Smart Pointers
 
-## Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
+#### Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ![Pointeurs](pictures/pointers.png)
 
