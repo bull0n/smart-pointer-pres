@@ -15,11 +15,13 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ### Sommaire
 
-- Qu'est ce que les Smart Pointers?
+* Qu'est ce que les Smart Pointers?
+* STD bibliothèque
 - auto_ptr
 - shared_ptr
 - weak_ptr
 - unique_ptr
+* Qt
 - Pointeurs similaires
 - QSharedDataPointer
 - QScopedPointer et QScopedArrayPointer
