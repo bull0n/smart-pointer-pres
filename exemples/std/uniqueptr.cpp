@@ -22,6 +22,7 @@ int main()
 {
     Person* dumb = new Person("Dumb");
     unique_ptr<Person> smart(new Person("Smart"));
+    // unique_ptr<Person> smartClone(smart.get()); // with unique_ptr the object can only be used in one smart pointer -> this line will provoke a segmentation error
     unique_ptr<int[]> intPtr(new int[10000000]);
 
     cout << smart.get() << endl;
