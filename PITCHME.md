@@ -37,5 +37,3 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
  - QScopedPointer et QScopedArrayPointer
 
 @divend
-
----
