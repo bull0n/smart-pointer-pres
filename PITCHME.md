@@ -1,4 +1,4 @@
-# Smart Pointers
+## Smart Pointers
 
 @div[left-50]
 
