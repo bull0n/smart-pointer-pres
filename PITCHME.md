@@ -1,8 +1,8 @@
 # Smart Pointers
 
-An application architecture for React
+## Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
-![Flux Explained](https://facebook.github.io/flux/img/flux-simple-f8-diagram-explained-1300w.png)
+![Pointeurs](pictures/pointers.png)
 
 ---
 
