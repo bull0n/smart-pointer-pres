@@ -15,6 +15,7 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ### Sommaire
 
+@ul
 - Qu'est ce que les Smart Pointers?
 - STD bibliothèque
  - auto_ptr
@@ -25,3 +26,4 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
  - Pointeurs similaires
  - QSharedDataPointer
  - QScopedPointer et QScopedArrayPointer
+@ulend
