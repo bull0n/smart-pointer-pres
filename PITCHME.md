@@ -18,7 +18,6 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 @ul
 - Qu'est ce que les Smart Pointers?
 - STD bibliothèque
- - auto_ptr
  - shared_ptr
  - weak_ptr
  - unique_ptr
