@@ -13,9 +13,9 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ---
 
-# Sommaire
+#### Sommaire
 
-- Qu'est ce que les Smart Pointers?
+### Qu'est ce que les Smart Pointers?
 
 @div[left-50]
 
