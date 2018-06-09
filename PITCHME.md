@@ -19,21 +19,20 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 @div[left-50]
 
-- Bibliothèque standard
- - auto_ptr
- - shared_ptr
- - weak_ptr
- - unique_ptr
+##### Bibliothèque standard
+  - auto_ptr
+  - shared_ptr
+  - weak_ptr
+  - unique_ptr
 
 @divend
 
 @div[right-50]
 
-![Qt](pictures/qt.png)
+##### Qt
 
-- Qt
- - Pointeurs similaires
- - QSharedDataPointer
- - QScopedPointer et QScopedArrayPointer
+  - Pointeurs similaires
+  - QSharedDataPointer
+  - QScopedPointer et QScopedArrayPointer
 
 @divend
