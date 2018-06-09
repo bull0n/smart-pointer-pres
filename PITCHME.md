@@ -15,24 +15,11 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ### Sommaire
 
-#### Qu'est ce que les Smart Pointers?
-
-@div[left-50]
-
-##### Bibliothèque standard
-  - auto_ptr
-  - shared_ptr
-  - weak_ptr
-  - unique_ptr
-
-@divend
-
-@div[right-50]
-
-##### Qt
-
-  - Pointeurs similaires
-  - QSharedDataPointer
-  - QScopedPointer et QScopedArrayPointer
-
-@divend
+- Qu'est ce que les Smart Pointers?
+- auto_ptr
+- shared_ptr
+- weak_ptr
+- unique_ptr
+- Pointeurs similaires
+- QSharedDataPointer
+- QScopedPointer et QScopedArrayPointer
