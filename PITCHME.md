@@ -72,6 +72,10 @@ private:
 
 #### unique_ptr
 
+- Evolution de auto_ptr
+- Un objet ne peut être que dans un seul unique_ptr
+- Marche
+
 ---
 
 #### shared_ptr
