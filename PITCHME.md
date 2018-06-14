@@ -74,3 +74,10 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 ---
 
 ### Bibliographie
+
+@ul
+
+ - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
+ - http://ootips.org/yonat/4dev/smart-pointers.html
+
+@ulend
