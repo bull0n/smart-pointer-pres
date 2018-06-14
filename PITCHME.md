@@ -187,6 +187,8 @@ int main()
 // 42
 // gw is expired
 ```
+Note:
+essai de note
 ---
 
 #### weak_ptr (fonctions)
