@@ -455,6 +455,12 @@ void useCanape(bool homer, int chaine)
 void useTelecommande(QScopedPointer<Telecommande>& telecommande){
     //Quelque chose qui pourrais lancer une exception !
 }
+
+int main(int argc, char *argv[])
+{
+    int chaine = 12;
+    useCanape(true, chaine);
+}
 ```
 
 ---
@@ -463,12 +469,13 @@ void useTelecommande(QScopedPointer<Telecommande>& telecommande){
 - Identique à `QScopedPointer` mais pour des tableaux d'objets
 
 ```c++
-void foo()
+void createCanapes()
 {
-    QScopedArrayPointer<int> i(new int[10]);
-    i[2] = 42;
-    ...
-    return; // our integer array is now deleted using delete[]
+    QScopedArrayPointer<Canape> canapes(new Canape[2]);
+    canapes[0] = new Fauteuil();
+    canapes[1] = new Canape(5);
+    //Something ...
+    return; // our Canape array is now deleted using delete[]
 }
 ```
 ---
@@ -478,9 +485,9 @@ void foo()
 ---
 
 ### Conclusion
-@ul
+
 MERCI DE VOTRE ATTENTION
-@endul
+
 ---
 
 ### Références
