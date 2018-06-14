@@ -175,7 +175,7 @@ Notions élémentaires 2
 ---
 
 #### QSharedDataPointer
-- Partage de *données*, pas d'un ~~pointeur~~ sur ces données
+- Partage de **données**, pas d'un ~~pointeur~~
 - Ce qui implique quelles peuvent être copiées
 
 ```c++
@@ -226,15 +226,14 @@ int main()
 ```
 
 ---
-#### QExplicitlySharedDataPointer
-- Identique à QSharedDataPointer à une énorme différences près:
+#### `QExplicitlySharedDataPointer`
+- Identique à `QSharedDataPointer` à une énorme différences près:
  - Lors que l'on fait une copie de l'objet partagé, ne le copie *PAS*
- - Possibilité de préciser si l'on veut que les données soient dupliquées avec
- -
+ - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
 ---
 
-#### QScopedPointer
+#### `QScopedPointer`
 - Permet d'assurer qu'un objet sera supprimé à la sortie de la portée dans laquelle il est instancié
 
 Exemple sans
@@ -264,7 +263,7 @@ void myFunction(bool useSubClass)
 ```
 
 ---
-#### QScopedPointer
+#### `QScopedPointer`
 Exemple avec:
 
 ```c++
@@ -283,8 +282,18 @@ void myFunction(bool useSubClass)
 
 ---
 
-#### QScopedArrayPointer
+#### `QScopedArrayPointer`
+- Identique à `QScopedPointer` mais pour des tableaux d'objets
 
+```c++
+void foo()
+{
+    QScopedArrayPointer<int> i(new int[10]);
+    i[2] = 42;
+    ...
+    return; // our integer array is now deleted using delete[]
+}
+```
 ---
 
 ### Exercice
