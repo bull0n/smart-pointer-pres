@@ -202,7 +202,7 @@ int main()
 #### `weak_ptr`
 
 - Résoud les problèmes de références cycliques
-- Vérification de la validité de la  référence
+- Vérification de la validité de la référence
 
 Note:
 - Ref cyclic -> création d'un shr depuis un autre shr
@@ -291,7 +291,7 @@ if (!o.isNull())
     o->setProperty("objectName", "Object");
 ```
 
-Note :
+Note:
 QWidget -> les objets sont créer et manipuler uniquement par le thread de GUI -> sûr !
 ---
 
@@ -315,6 +315,24 @@ Polymorique :
 
 #### Pointeurs similaires - `QWeakPointer`
 
+- Même principe que dans la STD
+- expired() devient isNull()
+
+---
+
+#### Pointeurs similaires - `QWeakPointer` (code)
+
+```c++
+QWeakPointer<Data> weak(getSharedPointer());
+
+// [...]
+QSharedPointer<Data> ptr = weak.toStrongRef();
+if (!ptr.isNull())
+    ptr->doSomething();
+```
+
+Note:
+Promotion d'un weak en shared, section à rendre thread-safe
 ---
 
 #### QSharedDataPointer
