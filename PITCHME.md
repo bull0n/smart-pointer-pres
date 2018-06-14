@@ -120,7 +120,7 @@ int main()
 
 #### `unique_ptr` (exécution)
 
-![unique_ptr exécution](pictures/execution_shared_ptr.png)
+![unique_ptr exécution](pictures/uniqueptr.png)
 
 ---
 
