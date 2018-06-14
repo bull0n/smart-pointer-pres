@@ -205,8 +205,8 @@ int main()
 - Vérification de la validité de la  référence
 
 Note:
-Ref cyclic -> création d'un shr depuis un autre shr
-Provoque exception de la part du cstr
+- Ref cyclic -> création d'un shr depuis un autre shr
+- Provoque exception de la part du cstr
 ---
 
 #### weak_ptr (code)
@@ -237,13 +237,13 @@ int main()
 // gw is expired
 ```
 Note:
-gw est déclarer en global
-MAIN
-déclaration de sp sur val 42
-cstr de gw à partir de sp
-appel de f()
-essai de récupération du ptr
-appel hors du scope
+- gw est déclarer en global
+- MAIN
+  - déclaration de sp sur val 42
+  - cstr de gw à partir de sp
+  - appel de f()
+  - essai de récupération du ptr
+  - appel hors du scope
 ---
 
 #### weak_ptr (fonctions)
@@ -253,9 +253,9 @@ appel hors du scope
 - `long use_count() const;`
 
 Note:
-lock() utilise expired()
-expired() utilise use_count()
-use_count() compte le nb de ref
+- lock() utilise expired()
+- expired() utilise use_count()
+- use_count() compte le nb de ref
 ---
 
 ### Qt
