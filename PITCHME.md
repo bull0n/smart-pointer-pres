@@ -143,6 +143,46 @@ int main()
 
 #### weak_ptr
 
+- Résoud les problèmes de référence cyclique
+- Vérification de la validité de la  référence
+
+---
+
+#### weak_ptr (code)
+
+```c++
+#include <iostream>
+#include <memory>
+
+std::weak_ptr<int> gw;
+
+void f()
+{
+    if (auto spt = gw.lock()) { std::cout << *spt << "\n"; }
+    else { std::cout << "gw is expired\n"; }
+}
+
+int main()
+{
+    {
+        auto sp = std::make_shared<int>(42);
+	    gw = sp;
+	    f();
+    }
+    f();
+}
+// Resultats :
+// 42
+// gw is expired
+```
+---
+
+#### weak_ptr (fonctions)
+
+- ```c++ std::shared_ptr<T> lock() const; ```
+- ```c++ bool expired() const;```
+- ```c++ long use_count() const;```
+
 ---
 
 ### Qt
