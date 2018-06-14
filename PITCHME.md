@@ -24,7 +24,7 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 - Qt
  - Pointeurs similaires
  - QSharedDataPointer
- - QScopedPointer et QScopedArrayPointer
+ - QScopedPointer & QScopedArrayPointer
 @ulend
 
 ---
@@ -336,8 +336,13 @@ int main(int argc, char *argv[])
 ---
 #### `QExplicitlySharedDataPointer`
 - Identique à `QSharedDataPointer` à une énorme différences près:
- - Pas de *copie* des données lors de la copie du pointer
+ - Pas une **copie** des données lors de la copie du pointer
  - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
+
+---
+
+#### `QExplicitlySharedDataPointer`
+Exemple :
 
 ```c++
 int main(int argc, char *argv[])
@@ -435,8 +440,6 @@ void foo()
 ---
 
 ### Référence
-
-
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
  - http://ootips.org/yonat/4dev/smart-pointers.html
  - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
