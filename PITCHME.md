@@ -199,7 +199,7 @@ int main()
 
 ---
 
-#### weak_ptr
+#### `weak_ptr`
 
 - Résoud les problèmes de références cycliques
 - Vérification de la validité de la  référence
@@ -209,7 +209,7 @@ Note:
 - Provoque exception de la part du cstr
 ---
 
-#### weak_ptr (code)
+#### `weak_ptr` (code)
 
 ```c++
 #include <iostream>
@@ -246,7 +246,7 @@ Note:
   - appel hors du scope
 ---
 
-#### weak_ptr (fonctions)
+#### `std::weak_ptr` (fonctions)
 
 - `std::shared_ptr<T> lock() const;`
 - `bool expired() const;`
@@ -270,12 +270,50 @@ Notions élémentaires:
 ---
 
 ### Qt
-Notions élémentaires 2
+Notions élémentaires 2:
 - Strong versus weak
+  - Promotion de pointeur faible en fort
+  - Garantit de l'existence du pointeur
 
 ---
 
-#### Pointeurs similaires
+#### Pointeurs similaires - `QPointer`
+
+- Faible
+- Pointe sur la donnée
+- Pas de garantit (sauf sur QWidget)
+
+```c++
+QPointer<QObject> o = getObject();
+
+// [...]
+if (!o.isNull())
+    o->setProperty("objectName", "Object");
+```
+
+Note :
+QWidget -> les objets sont créer et manipuler uniquement par le thread de GUI -> sûr !
+---
+
+#### Pointeurs similaires - `QSharedPointer`
+
+- Partage le pointeur
+- Pointeur moderne (depuis Qt 4.5)
+- Est thread-safe
+
+Note:
+Moderne :
+- Polymorphique
+- Supporte casting static, const & dynamic
+- Atomic reference-counting
+
+Polymorique :
+- taille double d'un pointeur normal
+- compatibilité binaire impossible à maintenir
+
+---
+
+#### Pointeurs similaires - `QWeakPointer`
 
 ---
 
@@ -409,9 +447,10 @@ void foo()
 
 ---
 
-### Référence
+### Références
 
-
+ - http://fr.cppreference.com/w/cpp/memory/weak_ptr
+ - http://blog.qt.io/blog/2009/08/25/count-with-me-how-many-smart-pointer-classes-does-qt-have/
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
  - http://ootips.org/yonat/4dev/smart-pointers.html
  - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
