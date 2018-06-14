@@ -62,7 +62,7 @@ private:
 
 ### STD biblothèque
 
- - #include <<memory>>
+ - `#include <memory>`
  - auto_ptr avec C++98
   - Déprecié
  - Utilisé les pointeurs que l'on va vous présenter.
