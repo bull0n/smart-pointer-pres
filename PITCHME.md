@@ -66,6 +66,7 @@ private:
  - auto_ptr avec C++98
   - Déprecié
  - Utiliser les pointeurs que l'on va vous présenter.
+ - Accéder au pointeur originel avec .get()
 
 ---
 
@@ -78,6 +79,13 @@ private:
  - Pointeur partagé entre plusieurs objets
  - Sera détruit quand la dernière référence sera détruite
  - /!\ Ne pas créer de smart pointers depuis un pointeurs déjà dans un shared_ptr /!\
+
+```c++
+Sofa* sofa = new Sofa();
+Simpson homer("homer", sofa); // NON !
+```
+
+ - http://en.cppreference.com/w/cpp/memory/shared_ptr
 
 ---
 
