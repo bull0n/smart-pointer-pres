@@ -27,6 +27,8 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
  - QScopedPointer et QScopedArrayPointer
 @ulend
 
+---
+
 ### Qu'est-ce que les Smarts Pointers
 
 ---
