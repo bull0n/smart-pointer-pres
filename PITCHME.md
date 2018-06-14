@@ -70,15 +70,61 @@ private:
 
 ---
 
-#### unique_ptr
+#### `unique_ptr`
 
 - Evolution de auto_ptr
 - Un objet ne peut être que dans un seul unique_ptr
-- Marche
+- Marche également avec les tableaux de données
+ - appelle de delete[]
+- http://en.cppreference.com/w/cpp/memory/unique_ptr
 
 ---
 
-#### shared_ptr
+#### `unique_ptr` - Classe (code)
+
+```c++
+class Person
+{
+public:
+    Person(string name)
+    {
+        this->name = name;
+    }
+    ~Person()
+    {
+        cout << this->name << " died, RIP" << endl;
+    }
+private:
+    string name;
+};
+```
+---
+
+#### `unique_ptr` - main (code)
+
+```c++
+int main()
+{
+    Person* dumb = new Person("Dumb");
+    unique_ptr<Person> smart(new Person("Smart"));
+    unique_ptr<int[]> intPtr(new int[10000000]);
+
+    cout << smart.get() << endl;
+
+    return 0;
+}
+
+```
+
+---
+
+#### `unique_ptr` (exécution)
+
+![unique_ptr exécution](pictures/uniqueptr.png)
+
+---
+
+#### `shared_ptr`
 
  - Pointeur partagé entre plusieurs objets
  - Sera détruit quand la dernière référence sera détruite
@@ -93,7 +139,7 @@ Simpson homer("homer", sofa); // NON !
 
 ---
 
-#### shared_ptr (code)
+#### `shared_ptr` - Classes (code)
 
  ```c++
 class Sofa
@@ -126,7 +172,7 @@ private:
 
 ---
 
-#### shared_ptr (code)
+#### `shared_ptr` - Main (code)
 
 ```c++
 int main()
@@ -143,18 +189,73 @@ int main()
 
 ---
 
-#### shared_ptr (exécution)
+#### `shared_ptr` (exécution)
 
-![Pointeurs](pictures/execution_shared_ptr.png)
+![shared_ptre exécution](pictures/execution_shared_ptr.png)
 
 ---
 
-![Pointeurs](pictures/simpsons-sofa.jpg)
+![Canapé](pictures/simpsons-sofa.jpg)
 
 ---
 
 #### weak_ptr
 
+- Résoud les problèmes de références cycliques
+- Vérification de la validité de la  référence
+
+Note:
+- Ref cyclic -> création d'un shr depuis un autre shr
+- Provoque exception de la part du cstr
+---
+
+#### weak_ptr (code)
+
+```c++
+#include <iostream>
+#include <memory>
+
+std::weak_ptr<int> gw;
+
+void f()
+{
+    if (auto spt = gw.lock()) { std::cout << *spt << "\n"; }
+    else { std::cout << "gw is expired\n"; }
+}
+
+int main()
+{
+    {
+        auto sp = std::make_shared<int>(42);
+	    gw = sp;
+	    f();
+    }
+    f();
+}
+// Resultats :
+// 42
+// gw is expired
+```
+Note:
+- gw est déclarer en global
+- MAIN
+  - déclaration de sp sur val 42
+  - cstr de gw à partir de sp
+  - appel de f()
+  - essai de récupération du ptr
+  - appel hors du scope
+---
+
+#### weak_ptr (fonctions)
+
+- `std::shared_ptr<T> lock() const;`
+- `bool expired() const;`
+- `long use_count() const;`
+
+Note:
+- lock() utilise expired()
+- expired() utilise use_count()
+- use_count() compte le nb de ref
 ---
 
 ### Qt
