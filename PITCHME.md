@@ -31,9 +31,41 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ### Qu'est-ce que les Smarts Pointers
 
+- But : ne pas devoir à réfléchir quand `delete`
+- Objet qui va stocker un pointeur
+- Ce n'est pas un système Garbage Collector comme en java
+- Il faut quand même réfléchir auquel utiliser
+
+---
+
+#### Principe
+
+```c++
+template <typename T>
+class UniquePtr
+{
+public:
+  UniquePtr(T* object)
+  {
+    this->object = object;
+  }
+  ~UniquePtr()
+  {
+    delete this->object;
+  }
+private:
+  T* object;
+};
+```
+
 ---
 
 ### STD biblothèque
+
+ - #include <memory>
+ - auto_ptr avec C++98
+  - Déprecié
+ - Utilisé les pointeurs que l'on va vous présenter.
 
 ---
 
@@ -52,31 +84,31 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 #### shared_ptr (code)
 
  ```c++
- class Sofa
+class Sofa
+{
+public:
+ Sofa() {}
+ ~Sofa()
  {
- public:
-   Sofa() {}
-   ~Sofa()
-   {
-     cout << "nobody's sofa, it has been dumped" << endl;
-   }
- };
+   cout << "nobody's sofa, it has been dumped" << endl;
+ }
+};
 
- class Simpson
+class Simpson
+{
+public:
+ Simpson(string name, shared_ptr<Sofa> sofa) : sofa(sofa)
  {
- public:
-   Simpson(string name, shared_ptr<Sofa> sofa) : sofa(sofa)
-   {
-     this->name = name;
-   }
-   ~Simpson()
-   {
-     cout << this->name << " got lost" << endl;
-   }
- private:
-   shared_ptr<Sofa> sofa;
-   string name;
- };
+   this->name = name;
+ }
+ ~Simpson()
+ {
+   cout << this->name << " got lost" << endl;
+ }
+private:
+ shared_ptr<Sofa> sofa;
+ string name;
+};
 
  ```
 
@@ -208,7 +240,7 @@ int main()
 
 ---
 
-### Bibliographie
+### Référence
 
 
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
