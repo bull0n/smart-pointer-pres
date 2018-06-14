@@ -201,6 +201,48 @@ int main()
 
 #### weak_ptr
 
+- Résoud les problèmes de référence cyclique
+- Vérification de la validité de la  référence
+
+---
+
+#### weak_ptr (code)
+
+```c++
+#include <iostream>
+#include <memory>
+
+std::weak_ptr<int> gw;
+
+void f()
+{
+    if (auto spt = gw.lock()) { std::cout << *spt << "\n"; }
+    else { std::cout << "gw is expired\n"; }
+}
+
+int main()
+{
+    {
+        auto sp = std::make_shared<int>(42);
+	    gw = sp;
+	    f();
+    }
+    f();
+}
+// Resultats :
+// 42
+// gw is expired
+```
+Note:
+essai de note
+---
+
+#### weak_ptr (fonctions)
+
+- `std::shared_ptr<T> lock() const;`
+- `bool expired() const;`
+- `long use_count() const;`
+
 ---
 
 ### Qt
@@ -225,7 +267,7 @@ Notions élémentaires 2
 ---
 
 #### QSharedDataPointer
-- Partage de *données*, pas d'un ~~pointeur~~ sur ces données
+- Partage de **données**, pas d'un ~~pointeur~~
 - Ce qui implique quelles peuvent être copiées
 
 ```c++
@@ -277,14 +319,13 @@ int main()
 
 ---
 #### `QExplicitlySharedDataPointer`
-- Identique à QSharedDataPointer à une énorme différences près:
+- Identique à `QSharedDataPointer` à une énorme différences près:
  - Lors que l'on fait une copie de l'objet partagé, ne le copie *PAS*
- - Possibilité de préciser si l'on veut que les données soient dupliquées avec
- -
+ - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
 ---
 
-#### QScopedPointer
+#### `QScopedPointer`
 - Permet d'assurer qu'un objet sera supprimé à la sortie de la portée dans laquelle il est instancié
 
 Exemple sans
@@ -314,7 +355,7 @@ void myFunction(bool useSubClass)
 ```
 
 ---
-#### QScopedPointer
+#### `QScopedPointer`
 Exemple avec:
 
 ```c++
@@ -333,8 +374,18 @@ void myFunction(bool useSubClass)
 
 ---
 
-#### QScopedArrayPointer
+#### `QScopedArrayPointer`
+- Identique à `QScopedPointer` mais pour des tableaux d'objets
 
+```c++
+void foo()
+{
+    QScopedArrayPointer<int> i(new int[10]);
+    i[2] = 42;
+    ...
+    return; // our integer array is now deleted using delete[]
+}
+```
 ---
 
 ### Exercice
