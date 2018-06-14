@@ -70,15 +70,61 @@ private:
 
 ---
 
-#### unique_ptr
+#### `unique_ptr`
 
 - Evolution de auto_ptr
 - Un objet ne peut être que dans un seul unique_ptr
-- Marche
+- Marche également avec les tableaux de données
+ - appelle de delete[]
+- http://en.cppreference.com/w/cpp/memory/unique_ptr
 
 ---
 
-#### shared_ptr
+#### `unique_ptr` - Classe (code)
+
+```c++
+class Person
+{
+public:
+    Person(string name)
+    {
+        this->name = name;
+    }
+    ~Person()
+    {
+        cout << this->name << " died, RIP" << endl;
+    }
+private:
+    string name;
+};
+```
+---
+
+#### `unique_ptr` - main (code)
+
+```c++
+int main()
+{
+    Person* dumb = new Person("Dumb");
+    unique_ptr<Person> smart(new Person("Smart"));
+    unique_ptr<int[]> intPtr(new int[10000000]);
+
+    cout << smart.get() << endl;
+
+    return 0;
+}
+
+```
+
+---
+
+#### `unique_ptr` (exécution)
+
+![unique_ptr exécution](pictures/uniqueptr.png)
+
+---
+
+#### `shared_ptr`
 
  - Pointeur partagé entre plusieurs objets
  - Sera détruit quand la dernière référence sera détruite
@@ -93,7 +139,7 @@ Simpson homer("homer", sofa); // NON !
 
 ---
 
-#### shared_ptr (code)
+#### `shared_ptr` - Classes (code)
 
  ```c++
 class Sofa
@@ -126,7 +172,7 @@ private:
 
 ---
 
-#### shared_ptr (code)
+#### `shared_ptr` - Main (code)
 
 ```c++
 int main()
@@ -143,13 +189,13 @@ int main()
 
 ---
 
-#### shared_ptr (exécution)
+#### `shared_ptr` (exécution)
 
-![Pointeurs](pictures/execution_shared_ptr.png)
+![shared_ptre exécution](pictures/execution_shared_ptr.png)
 
 ---
 
-![Pointeurs](pictures/simpsons-sofa.jpg)
+![Canapé](pictures/simpsons-sofa.jpg)
 
 ---
 
