@@ -271,11 +271,11 @@ void myFunction(bool useSubClass)
 Exemple avec:
 
 ```c++
-void myFunction(bool useSubClass)
+void useCanape(bool homer)
 {
     // assuming that MyClass has a virtual destructor
-    QScopedPointer<MyClass> p(useSubClass ? new MyClass() : new MySubClass);
-    QScopedPointer<QIODevice> device(handsOverOwnership());
+    QScopedPointer<Canape> p(useSubClass ? new Fauteuil() : new Canape());
+    QScopedPointer<QIODevice> telecommande(handsOverOwnership());
 
     if (m_value > 3)
         return;
