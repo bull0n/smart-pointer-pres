@@ -321,6 +321,8 @@ Polymorique :
 - Ce qui implique que ces données peuvent être copiées à travers le *pointer*
 - Thread-safe
 
+---
+
 #### QSharedDataPointer
 Exemple :
 
