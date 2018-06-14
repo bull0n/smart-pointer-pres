@@ -65,7 +65,7 @@ private:
  - `#include <memory>`
  - auto_ptr avec C++98
   - Déprecié
- - Utilisé les pointeurs que l'on va vous présenter.
+ - Utiliser les pointeurs que l'on va vous présenter.
 
 ---
 
@@ -77,7 +77,7 @@ private:
 
  - Pointeur partagé entre plusieurs objets
  - Sera détruit quand la dernière référence sera détruite
- - A passer en paramètre directement (Voir code)
+ - /!\ Ne pas créer de smart pointers depuis un pointeurs déjà dans un shared_ptr /!\
 
 ---
 
