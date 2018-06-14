@@ -24,7 +24,7 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 - Qt
  - Pointeurs similaires
  - QSharedDataPointer
- - QScopedPointer et QScopedArrayPointer
+ - QScopedPointer & QScopedArrayPointer
 @ulend
 
 ---
@@ -199,14 +199,17 @@ int main()
 
 ---
 
-#### weak_ptr
+#### `weak_ptr`
 
-- Résoud les problèmes de référence cyclique
+- Résoud les problèmes de références cycliques
 - Vérification de la validité de la  référence
 
+Note:
+- Ref cyclic -> création d'un shr depuis un autre shr
+- Provoque exception de la part du cstr
 ---
 
-#### weak_ptr (code)
+#### `weak_ptr` (code)
 
 ```c++
 #include <iostream>
@@ -216,7 +219,7 @@ std::weak_ptr<int> gw;
 
 void f()
 {
-    if (auto spt = gw.lock()) { std::cout << *spt << "\n"; }
+    if (auto spt = gw.lock()) { std::cout << \*spt << "\n"; }
     else { std::cout << "gw is expired\n"; }
 }
 
@@ -234,15 +237,25 @@ int main()
 // gw is expired
 ```
 Note:
-essai de note
+- gw est déclarer en global
+- MAIN
+  - déclaration de sp sur val 42
+  - cstr de gw à partir de sp
+  - appel de f()
+  - essai de récupération du ptr
+  - appel hors du scope
 ---
 
-#### weak_ptr (fonctions)
+#### `std::weak_ptr` (fonctions)
 
 - `std::shared_ptr<T> lock() const;`
 - `bool expired() const;`
 - `long use_count() const;`
 
+Note:
+- lock() utilise expired()
+- expired() utilise use_count()
+- use_count() compte le nb de ref
 ---
 
 ### Qt
@@ -257,12 +270,50 @@ Notions élémentaires:
 ---
 
 ### Qt
-Notions élémentaires 2
+Notions élémentaires 2:
 - Strong versus weak
+  - Promotion de pointeur faible en fort
+  - Garantit de l'existence du pointeur
 
 ---
 
-#### Pointeurs similaires
+#### Pointeurs similaires - `QPointer`
+
+- Faible
+- Pointe sur la donnée
+- Pas de garantit (sauf sur QWidget)
+
+```c++
+QPointer<QObject> o = getObject();
+
+// [...]
+if (!o.isNull())
+    o->setProperty("objectName", "Object");
+```
+
+Note :
+QWidget -> les objets sont créer et manipuler uniquement par le thread de GUI -> sûr !
+---
+
+#### Pointeurs similaires - `QSharedPointer`
+
+- Partage le pointeur
+- Pointeur moderne (depuis Qt 4.5)
+- Est thread-safe
+
+Note:
+Moderne :
+- Polymorphique
+- Supporte casting static, const & dynamic
+- Atomic reference-counting
+
+Polymorique :
+- taille double d'un pointeur normal
+- compatibilité binaire impossible à maintenir
+
+---
+
+#### Pointeurs similaires - `QWeakPointer`
 
 ---
 
@@ -272,57 +323,79 @@ Notions élémentaires 2
 
 ```c++
 #include <QSharedData>
-#include <QString>
-
-class EmployeeData : public QSharedData
+class SimpsonMemberData : public QSharedData
 {
-  public:
-    EmployeeData() : id(-1) { }
-    EmployeeData(const EmployeeData &other)
-        : QSharedData(other), id(other.id), name(other.name) { }
-    ~EmployeeData() { }
-
-    int id;
+public:
+    SimpsonMemberData() : age(-1) { }
+    SimpsonMemberData(const SimpsonMemberData &other) : QSharedData(other), age(other.age), name(other.name) { }
+    ~SimpsonMemberData() {}
+    int age;
     QString name;
 };
 
-class Employee
+
+class SimpsonMember
 {
-  public:
-    Employee() { d = new EmployeeData; }
-    Employee(int id, const QString &name) {
-        d = new EmployeeData;
-        setId(id);
+public:
+    SimpsonMember() { \_data = new SimpsonMemberData; }
+    SimpsonMember(int age, const QString &name) {
+        \_data = new SimpsonMemberData();
+        setAge(age);
         setName(name);
     }
-    Employee(const Employee &other)
-          : d (other.d)
+    SimpsonMember(const SimpsonMember &other)
+          : \_data (other.\_data)
     {
     }
-    void setId(int id) { d->id = id; }
-    void setName(const QString &name) { d->name = name; }
+    void setAge(int age) { \_data->age = age; }
+    void setName(const QString &name) { \_data->name = name; }
 
-    int id() const { return d->id; }
-    QString name() const { return d->name; }
+    int age() const { return \_data->age; }
+    QString name() const { return \_data->name; }
 
   private:
-    QSharedDataPointer<EmployeeData> d;
+    QSharedDataPointer<SimpsonMemberData> \_data;
 };
 
-int main()
+int main(int argc, char *argv[])
 {
-    Employee e1(1001, "Albrecht Durer");
-    Employee e2 = e1;
-    e1.setName("Hans Holbein");
+    SimpsonMember homer(10, "Homer Simpson");
+    SimpsonMember barth = homer;
+    barth.setName("Barth Simspon");
+    homer.setAge(50);
+
+    qDebug() << "Nom : " << homer.name() << "\t age : " << homer.age();
+    // -> "Nom : Homer Simpson    age : 50";
+    qDebug() << "Nom : " << barth.name() << "\t age : " << barth.age();
+    // -> "Nom : Barth Simpson    age : 10";
 }
 ```
 
 ---
 #### `QExplicitlySharedDataPointer`
 - Identique à `QSharedDataPointer` à une énorme différences près:
- - Lors que l'on fait une copie de l'objet partagé, ne le copie *PAS*
+ - Pas une **copie** des données lors de la copie du pointer
  - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
+---
+
+#### `QExplicitlySharedDataPointer`
+Exemple :
+
+```c++
+int main(int argc, char *argv[])
+{
+   SimpsonMember homer(10, "Homer Simpson");
+   SimpsonMember barth = homer;
+   barth.setName("Barth Simspon");
+   homer.setAge(50);
+
+   qDebug() << "Nom : " << homer.name() << "\t age : " << homer.age();
+   // -> "Nom : Barth Simpson    age : 50";
+   qDebug() << "Nom : " << barth.name() << "\t age : " << barth.age();
+   // -> "Nom : Barth Simpson    age : 50";
+}
+```
 ---
 
 #### `QScopedPointer`
@@ -330,27 +403,31 @@ int main()
 
 Exemple sans
 ```c++
-void myFunction(bool useSubClass)
+void useCanape(bool homer, int chaine)
 {
-    MyClass \*p = useSubClass ? new MyClass() : new MySubClass;
-    QIODevice \*device = handsOverOwnership();
+    Canape \*canape = homer ? new Fauteuil() : new Canape(5);
+    Telecommande \*telecommande = Telecommande::createTelecommande();
 
-    if (m_value > 3) {
-        delete p;
-        delete device;
+    if (chaine < 1) {
+        delete canape;
+        delete telecommande;
         return;
     }
 
     try {
-        process(device);
+        useTelecommande(telecommande);
     } catch (...) {
-        delete p;
-        delete device;
+        delete canape;
+        delete telecommande;
         throw;
     }
 
-    delete p;
-    delete device;
+    delete canape;
+    delete telecommande;
+}
+
+void useTelecommande(Telecommande* telecommande){
+    //Quelque chose qui pourrais lancer une exception !
 }
 ```
 
@@ -359,16 +436,20 @@ void myFunction(bool useSubClass)
 Exemple avec:
 
 ```c++
-void myFunction(bool useSubClass)
+void useCanape(bool homer, int chaine)
 {
     // assuming that MyClass has a virtual destructor
-    QScopedPointer<MyClass> p(useSubClass ? new MyClass() : new MySubClass);
-    QScopedPointer<QIODevice> device(handsOverOwnership());
+    QScopedPointer<Canape> p(homer ? new Fauteuil() : new Canape(5));
+    QScopedPointer<Telecommande> telecommande(Telecommande::createTelecommande());
 
-    if (m_value > 3)
+    if (chaine < 1)
         return;
 
-    process(device);
+    useTelecommande(telecommande);
+}
+
+void useTelecommande(QScopedPointer<Telecommande>& telecommande){
+    //Quelque chose qui pourrais lancer une exception !
 }
 ```
 
@@ -396,9 +477,10 @@ void foo()
 
 ---
 
-### Référence
+### Références
 
-
+ - http://fr.cppreference.com/w/cpp/memory/weak_ptr
+ - http://blog.qt.io/blog/2009/08/25/count-with-me-how-many-smart-pointer-classes-does-qt-have/
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
  - http://ootips.org/yonat/4dev/smart-pointers.html
  - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
