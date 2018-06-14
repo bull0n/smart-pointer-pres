@@ -285,48 +285,51 @@ Notions élémentaires 2
 
 ```c++
 #include <QSharedData>
-#include <QString>
-
-class EmployeeData : public QSharedData
+class SimpsonMemberData : public QSharedData
 {
-  public:
-    EmployeeData() : id(-1) { }
-    EmployeeData(const EmployeeData &other)
-        : QSharedData(other), id(other.id), name(other.name) { }
-    ~EmployeeData() { }
-
-    int id;
+public:
+    SimpsonMemberData() : age(-1) { }
+    SimpsonMemberData(const SimpsonMemberData &other) : QSharedData(other), age(other.age), name(other.name) { }
+    ~SimpsonMemberData() {}
+    int age;
     QString name;
 };
 
-class Employee
+
+class SimpsonMember
 {
-  public:
-    Employee() { d = new EmployeeData; }
-    Employee(int id, const QString &name) {
-        d = new EmployeeData;
-        setId(id);
+public:
+    SimpsonMember() { \_data = new SimpsonMemberData; }
+    SimpsonMember(int age, const QString &name) {
+        \_data = new SimpsonMemberData();
+        setAge(age);
         setName(name);
     }
-    Employee(const Employee &other)
-          : d (other.d)
+    SimpsonMember(const SimpsonMember &other)
+          : \_data (other.\_data)
     {
     }
-    void setId(int id) { d->id = id; }
-    void setName(const QString &name) { d->name = name; }
+    void setAge(int age) { \_data->age = age; }
+    void setName(const QString &name) { \_data->name = name; }
 
-    int id() const { return d->id; }
-    QString name() const { return d->name; }
+    int age() const { return \_data->age; }
+    QString name() const { return \_data->name; }
 
   private:
-    QSharedDataPointer<EmployeeData> d;
+    QSharedDataPointer<SimpsonMemberData> \_data;
 };
 
-int main()
+int main(int argc, char *argv[])
 {
-    Employee e1(1001, "Albrecht Durer");
-    Employee e2 = e1;
-    e1.setName("Hans Holbein");
+    SimpsonMember homer(10, "Homer Simpson");
+    SimpsonMember barth = homer;
+    barth.setName("Barth Simspon");
+    homer.setAge(50);
+
+    qDebug() << "Nom : " << homer.name() << "\t age : " << homer.age();
+    // -> "Nom : Homer Simpson    age : 50";
+    qDebug() << "Nom : " << barth.name() << "\t age : " << barth.age();
+    // -> "Nom : Barth Simpson    age : 10";
 }
 ```
 
@@ -336,6 +339,20 @@ int main()
  - Lors que l'on fait une copie de l'objet partagé, ne le copie *PAS*
  - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
+```c++
+ int main(int argc, char *argv[])
+ {
+     SimpsonMember homer(10, "Homer Simpson");
+     SimpsonMember barth = homer;
+     barth.setName("Barth Simspon");
+     homer.setAge(50);
+
+     qDebug() << "Nom : " << homer.name() << "\t age : " << homer.age();
+     // -> "Nom : Barth Simpson    age : 50";
+     qDebug() << "Nom : " << barth.name() << "\t age : " << barth.age();
+     // -> "Nom : Barth Simpson    age : 50";
+ }
+ ```
 ---
 
 #### `QScopedPointer`
