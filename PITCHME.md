@@ -336,23 +336,23 @@ int main(int argc, char *argv[])
 ---
 #### `QExplicitlySharedDataPointer`
 - Identique à `QSharedDataPointer` à une énorme différences près:
- - Lors que l'on fait une copie de l'objet partagé, ne le copie *PAS*
+ - Pas de *copie* des données lors de la copie du pointer
  - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
 ```c++
- int main(int argc, char *argv[])
- {
-     SimpsonMember homer(10, "Homer Simpson");
-     SimpsonMember barth = homer;
-     barth.setName("Barth Simspon");
-     homer.setAge(50);
+int main(int argc, char *argv[])
+{
+   SimpsonMember homer(10, "Homer Simpson");
+   SimpsonMember barth = homer;
+   barth.setName("Barth Simspon");
+   homer.setAge(50);
 
-     qDebug() << "Nom : " << homer.name() << "\t age : " << homer.age();
-     // -> "Nom : Barth Simpson    age : 50";
-     qDebug() << "Nom : " << barth.name() << "\t age : " << barth.age();
-     // -> "Nom : Barth Simpson    age : 50";
- }
- ```
+   qDebug() << "Nom : " << homer.name() << "\t age : " << homer.age();
+   // -> "Nom : Barth Simpson    age : 50";
+   qDebug() << "Nom : " << barth.name() << "\t age : " << barth.age();
+   // -> "Nom : Barth Simpson    age : 50";
+}
+```
 ---
 
 #### `QScopedPointer`
