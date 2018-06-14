@@ -259,7 +259,7 @@ Note:
 ---
 
 ### Qt
-Notions élémentaires:
+Notions élémentaires :
 - Shared pointer versus shared data
 - Shared pointer
  - Partage d'un pointeur
@@ -270,11 +270,10 @@ Notions élémentaires:
 ---
 
 ### Qt
-Notions élémentaires 2:
+Notions élémentaires 2 :
 - Strong versus weak
-  - Promotion de pointeur faible en fort
-  - Garantit de l'existence du pointeur
-
+ - **Strong** -> Garantie que l'objet contenu dans le pointeur ne sera pas détruit tant qu'une autre référence existe
+ - **Weak** -> Ne garantie *pas* que l'objet contenu dans le pointeur sera toujours valide
 ---
 
 #### Pointeurs similaires - `QPointer`
@@ -336,8 +335,14 @@ Promotion d'un weak en shared, section à rendre thread-safe
 ---
 
 #### QSharedDataPointer
-- Partage de **données**, pas d'un ~~pointeur~~
-- Ce qui implique quelles peuvent être copiées
+- Partage de **données**, pas d'un ~~pointeur~~ sur des données
+- Ce qui implique que ces données peuvent être copiées à travers le *pointer*
+- Thread-safe
+
+---
+
+#### QSharedDataPointer
+Exemple :
 
 ```c++
 #include <QSharedData>
@@ -350,7 +355,6 @@ public:
     int age;
     QString name;
 };
-
 
 class SimpsonMember
 {
@@ -469,6 +473,12 @@ void useCanape(bool homer, int chaine)
 void useTelecommande(QScopedPointer<Telecommande>& telecommande){
     //Quelque chose qui pourrais lancer une exception !
 }
+
+int main(int argc, char *argv[])
+{
+    int chaine = 12;
+    useCanape(true, chaine);
+}
 ```
 
 ---
@@ -477,12 +487,13 @@ void useTelecommande(QScopedPointer<Telecommande>& telecommande){
 - Identique à `QScopedPointer` mais pour des tableaux d'objets
 
 ```c++
-void foo()
+void createCanapes()
 {
-    QScopedArrayPointer<int> i(new int[10]);
-    i[2] = 42;
-    ...
-    return; // our integer array is now deleted using delete[]
+    QScopedArrayPointer<Canape> canapes(new Canape[2]);
+    canapes[0] = new Fauteuil();
+    canapes[1] = new Canape(5);
+    //Something ...
+    return; // our Canape array is now deleted using delete[]
 }
 ```
 ---
@@ -492,6 +503,8 @@ void foo()
 ---
 
 ### Conclusion
+
+MERCI DE VOTRE ATTENTION
 
 ---
 
