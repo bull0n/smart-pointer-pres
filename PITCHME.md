@@ -64,14 +64,14 @@ private:
 
  - `#include <memory>`
  - auto_ptr avec C++98 (déprécié)
- - Utiliser les pointeurs que l'on va vous présenter.
+ - Utiliser les pointeurs que l'on va vous présenter
  - Accéder au pointeur originel avec .get()
 
 ---
 
 #### `std::unique_ptr`
 
-- Evolution de auto_ptr
+- Évolution de auto_ptr
 - Un objet ne peut être que dans un seul unique_ptr
 - Marche également avec les tableaux de données
  - appelle de delete[]
@@ -259,6 +259,7 @@ Note:
 
 ### Qt
 Notions élémentaires :
+
 *Shared pointer* versus *Shared data*
 - *Shared pointer*
  - Partage d'un pointeur
@@ -269,7 +270,8 @@ Notions élémentaires :
 ---
 
 ### Qt
-Notions élémentaires 2 :
+Notions élémentaires (2) :
+
 *Strong* versus *Weak*
  - **Strong** -> Garantit que l'objet contenu dans le pointeur ne soit pas détruit tant qu'une autre référence existe
  - **Weak** -> Ne garantit *pas* que l'objet contenu dans le pointeur soit toujours valide
@@ -516,9 +518,10 @@ Les classes Qt à retenir :
 
 ### Références
 
- - http://fr.cppreference.com/w/cpp/memory/weak_ptr
  - http://blog.qt.io/blog/2009/08/25/count-with-me-how-many-smart-pointer-classes-does-qt-have/
+ - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
  - http://ootips.org/yonat/4dev/smart-pointers.html
- - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
+ - http://fr.cppreference.com/w/cpp/memory/weak_ptr
  - https://wiki.qt.io/Smart_Pointers
+ - http://doc.qt.io/qt-5/
