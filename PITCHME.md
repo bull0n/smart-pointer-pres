@@ -26,3 +26,49 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
  - QSharedDataPointer
  - QScopedPointer et QScopedArrayPointer
 @ulend
+
+### Qu'est-ce que les Smarts Pointers
+
+---
+
+### STD biblothèque
+
+---
+
+#### shared_ptr
+
+---
+
+#### weak_ptr
+
+---
+
+### Qt
+
+---
+
+#### Pointeurs similaires
+
+---
+
+#### QSharedDataPointer
+
+---
+
+#### QScopedPointer
+
+---
+
+#### QScopedArrayPointer
+
+---
+
+### Exercice
+
+---
+
+### Conclusion
+
+---
+
+### Bibliographie
