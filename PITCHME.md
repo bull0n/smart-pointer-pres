@@ -67,8 +67,8 @@ Notions élémentaires 2
 ---
 
 #### QSharedDataPointer
-- Partage de "données" et non pas d'un "pointeur" sur ces données!!!
-- Ce qui implique quelles peuvent être copiées(dupliquées)
+- Partage de "données", pas d'un ~~"pointeur"~~ sur ces données!!!
+- Ce qui implique quelles peuvent être copiées
 
 ```c++
 #include <QSharedData>
