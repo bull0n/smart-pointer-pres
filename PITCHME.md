@@ -191,9 +191,9 @@ int main()
 
 #### weak_ptr (fonctions)
 
-- ```c++ std::shared_ptr<T> lock() const; ```
-- ```c++ bool expired() const;```
-- ```c++ long use_count() const;```
+- `std::shared_ptr<T> lock() const;`
+- `bool expired() const;`
+- `long use_count() const;`
 
 ---
 
