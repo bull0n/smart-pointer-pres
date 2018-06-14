@@ -37,7 +37,75 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ---
 
+#### unique_ptr
+
+---
+
 #### shared_ptr
+
+ - Pointeur partagé entre plusieurs objets
+ - Sera détruit quand la dernière référence sera détruite
+ - A passer en paramètre directement (Voir code)
+
+---
+
+#### shared_ptr (code)
+
+ ```c++
+ class Sofa
+ {
+ public:
+   Sofa() {}
+   ~Sofa()
+   {
+     cout << "nobody's sofa, it has been dumped" << endl;
+   }
+ };
+
+ class Simpson
+ {
+ public:
+   Simpson(string name, shared_ptr<Sofa> sofa) : sofa(sofa)
+   {
+     this->name = name;
+   }
+   ~Simpson()
+   {
+     cout << this->name << " got lost" << endl;
+   }
+ private:
+   shared_ptr<Sofa> sofa;
+   string name;
+ };
+
+ ```
+
+---
+
+#### shared_ptr (code)
+
+```c++
+int main()
+{
+  shared_ptr<Sofa> sofa(new Sofa());
+  Simpson homer("homer", sofa);
+  Simpson marge("marge", sofa);
+  Simpson bart("bart", sofa);
+  Simpson lisa("lisa", sofa);
+
+  cout << "The Simpsons are going home" << endl;
+}
+```
+
+---
+
+#### shared_ptr (exécution)
+
+![Pointeurs](pictures/execution_shared_ptr.png)
+
+---
+
+![Pointeurs](pictures/simpsons-sofa.jpg)
 
 ---
 
@@ -142,9 +210,8 @@ int main()
 
 ### Bibliographie
 
-@ul
 
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
  - http://ootips.org/yonat/4dev/smart-pointers.html
-
-@ulend
+ - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
+ - https://wiki.qt.io/Smart_Pointers
