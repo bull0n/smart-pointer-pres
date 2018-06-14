@@ -31,13 +31,121 @@ Par Biloni Kim, Wermeille Bastien et Bulloni Lucas
 
 ### Qu'est-ce que les Smarts Pointers
 
+- But : ne pas devoir à réfléchir quand `delete`
+- Objet qui va stocker un pointeur
+- Ce n'est pas un système Garbage Collector comme en java
+- Il faut quand même réfléchir auquel utiliser
+
+---
+
+#### Principe
+
+```c++
+template <typename T>
+class UniquePtr
+{
+public:
+  UniquePtr(T* object)
+  {
+    this->object = object;
+  }
+  ~UniquePtr()
+  {
+    delete this->object;
+  }
+private:
+  T* object;
+};
+```
+
 ---
 
 ### STD biblothèque
 
+ - `#include <memory>`
+ - auto_ptr avec C++98
+  - Déprecié
+ - Utiliser les pointeurs que l'on va vous présenter.
+ - Accéder au pointeur originel avec .get()
+
+---
+
+#### unique_ptr
+
 ---
 
 #### shared_ptr
+
+ - Pointeur partagé entre plusieurs objets
+ - Sera détruit quand la dernière référence sera détruite
+ - /!\ Ne pas créer de smart pointers depuis un pointeurs déjà dans un shared_ptr /!\
+
+```c++
+Sofa* sofa = new Sofa();
+Simpson homer("homer", sofa); // NON !
+```
+
+ - http://en.cppreference.com/w/cpp/memory/shared_ptr
+
+---
+
+#### shared_ptr (code)
+
+ ```c++
+class Sofa
+{
+public:
+ Sofa() {}
+ ~Sofa()
+ {
+   cout << "nobody's sofa, it has been dumped" << endl;
+ }
+};
+
+class Simpson
+{
+public:
+ Simpson(string name, shared_ptr<Sofa> sofa) : sofa(sofa)
+ {
+   this->name = name;
+ }
+ ~Simpson()
+ {
+   cout << this->name << " got lost" << endl;
+ }
+private:
+ shared_ptr<Sofa> sofa;
+ string name;
+};
+
+ ```
+
+---
+
+#### shared_ptr (code)
+
+```c++
+int main()
+{
+  shared_ptr<Sofa> sofa(new Sofa());
+  Simpson homer("homer", sofa);
+  Simpson marge("marge", sofa);
+  Simpson bart("bart", sofa);
+  Simpson lisa("lisa", sofa);
+
+  cout << "The Simpsons are going home" << endl;
+}
+```
+
+---
+
+#### shared_ptr (exécution)
+
+![Pointeurs](pictures/execution_shared_ptr.png)
+
+---
+
+![Pointeurs](pictures/simpsons-sofa.jpg)
 
 ---
 
@@ -187,11 +295,10 @@ void myFunction(bool useSubClass)
 
 ---
 
-### Bibliographie
+### Référence
 
-@ul
 
  - https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one
  - http://ootips.org/yonat/4dev/smart-pointers.html
-
-@ulend
+ - https://www.codeproject.com/Articles/541067/Cplusplus-Smart-Pointers
+ - https://wiki.qt.io/Smart_Pointers
