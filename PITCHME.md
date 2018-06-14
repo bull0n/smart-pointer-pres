@@ -60,17 +60,16 @@ private:
 
 ---
 
-### STD biblothèque
+### Biblothèque STD
 
  - `#include <memory>`
- - auto_ptr avec C++98
-  - Déprecié
+ - auto_ptr avec C++98 (déprécié)
  - Utiliser les pointeurs que l'on va vous présenter.
  - Accéder au pointeur originel avec .get()
 
 ---
 
-#### `unique_ptr`
+#### `std::unique_ptr`
 
 - Evolution de auto_ptr
 - Un objet ne peut être que dans un seul unique_ptr
@@ -80,7 +79,7 @@ private:
 
 ---
 
-#### `unique_ptr` - Classe (code)
+#### `std::unique_ptr` - Classe (code)
 
 ```c++
 class Person
@@ -100,7 +99,7 @@ private:
 ```
 ---
 
-#### `unique_ptr` - main (code)
+#### `std::unique_ptr` - main (code)
 
 ```c++
 int main()
@@ -118,13 +117,13 @@ int main()
 
 ---
 
-#### `unique_ptr` (exécution)
+#### `std::unique_ptr` (exécution)
 
 ![unique_ptr exécution](pictures/uniqueptr.png)
 
 ---
 
-#### `shared_ptr`
+#### `std::shared_ptr`
 
  - Pointeur partagé entre plusieurs objets
  - Sera détruit quand la dernière référence sera détruite
@@ -139,7 +138,7 @@ Simpson homer("homer", sofa); // NON !
 
 ---
 
-#### `shared_ptr` - Classes (code)
+#### `std::shared_ptr` - Classes (code)
 
  ```c++
 class Sofa
@@ -172,7 +171,7 @@ private:
 
 ---
 
-#### `shared_ptr` - Main (code)
+#### `std::shared_ptr` - Main (code)
 
 ```c++
 int main()
@@ -189,7 +188,7 @@ int main()
 
 ---
 
-#### `shared_ptr` (exécution)
+#### `std::shared_ptr` (exécution)
 
 ![shared_ptre exécution](pictures/execution_shared_ptr.png)
 
@@ -199,7 +198,7 @@ int main()
 
 ---
 
-#### `weak_ptr`
+#### `std::weak_ptr`
 
 - Résoud les problèmes de références cycliques
 - Vérification de la validité de la référence
@@ -209,7 +208,7 @@ Note:
 - Provoque exception de la part du cstr
 ---
 
-#### `weak_ptr` (code)
+#### `std::weak_ptr` (code)
 
 ```c++
 #include <iostream>
@@ -260,27 +259,27 @@ Note:
 
 ### Qt
 Notions élémentaires :
-- Shared pointer versus shared data
-- Shared pointer
+*Shared pointer* versus *Shared data*
+- *Shared pointer*
  - Partage d'un pointeur
  - Aucun intérêt pour les données partagées en soit
-- Shared Data
+- *Shared Data*
  - Partage de données
  - Aucun intérêt pour le pointer en soit ou la manière dont sont partagées les données
 ---
 
 ### Qt
 Notions élémentaires 2 :
-- Strong versus weak
- - **Strong** -> Garantie que l'objet contenu dans le pointeur ne sera pas détruit tant qu'une autre référence existe
- - **Weak** -> Ne garantie *pas* que l'objet contenu dans le pointeur sera toujours valide
+*Strong* versus *Weak*
+ - **Strong** -> Garantit que l'objet contenu dans le pointeur ne soit pas détruit tant qu'une autre référence existe
+ - **Weak** -> Ne garantit *pas* que l'objet contenu dans le pointeur soit toujours valide
 ---
 
 #### Pointeurs similaires - `QPointer`
 
 - Faible
 - Pointe sur la donnée
-- Pas de garantit (sauf sur QWidget)
+- Pas de garantie (sauf sur QWidget)
 
 ```c++
 QPointer<QObject> o = getObject();
@@ -298,7 +297,7 @@ QWidget -> les objets sont créer et manipuler uniquement par le thread de GUI -
 
 - Partage le pointeur
 - Pointeur moderne (depuis Qt 4.5)
-- Est thread-safe
+- Thread-safe
 
 Note:
 Moderne :
@@ -315,7 +314,7 @@ Polymorique :
 #### Pointeurs similaires - `QWeakPointer`
 
 - Même principe que dans la STD
-- expired() devient isNull()
+- `expired()` devient `isNull()`
 
 ---
 
@@ -336,13 +335,12 @@ Promotion d'un weak en shared, section à rendre thread-safe
 
 #### QSharedDataPointer
 - Partage de **données**, pas d'un ~~pointeur~~ sur des données
-- Ce qui implique que ces données peuvent être copiées à travers le *pointer*
+- Implique que ces données peuvent être copiées à travers le *pointer*
 - Thread-safe
 
 ---
 
-#### QSharedDataPointer
-Exemple :
+#### QSharedDataPointer (code)
 
 ```c++
 #include <QSharedData>
@@ -395,14 +393,13 @@ int main(int argc, char *argv[])
 
 ---
 #### `QExplicitlySharedDataPointer`
-- Identique à `QSharedDataPointer` à une énorme différences près:
+- Même principe que `QSharedDataPointer` excepté que:
  - Pas une **copie** des données lors de la copie du pointer
  - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
 ---
 
-#### `QExplicitlySharedDataPointer`
-Exemple :
+#### `QExplicitlySharedDataPointer` (code)
 
 ```c++
 int main(int argc, char *argv[])
@@ -423,7 +420,9 @@ int main(int argc, char *argv[])
 #### `QScopedPointer`
 - Permet d'assurer qu'un objet sera supprimé à la sortie de la portée dans laquelle il est instancié
 
-Exemple sans
+---
+#### `QScopedPointer` (code sans)
+
 ```c++
 void useCanape(bool homer, int chaine)
 {
@@ -454,8 +453,7 @@ void useTelecommande(Telecommande* telecommande){
 ```
 
 ---
-#### `QScopedPointer`
-Exemple avec:
+#### `QScopedPointer` (code avec)
 
 ```c++
 void useCanape(bool homer, int chaine)
@@ -504,7 +502,15 @@ void createCanapes()
 
 ### Conclusion
 
-MERCI DE VOTRE ATTENTION
+Les classes Qt à retenir :
+- `QSharedDataPointer / QExplicitlySharedDataPointer`
+- `QSharedPointer`
+- `QWeakPointer`
+- `QScopedPointer / QScopedArrayPointer`
+
+---
+
+### Merci !
 
 ---
 
