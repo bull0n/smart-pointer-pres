@@ -259,7 +259,7 @@ Note:
 ---
 
 ### Qt
-Notions élémentaires:
+Notions élémentaires :
 - Shared pointer versus shared data
 - Shared pointer
  - Partage d'un pointeur
@@ -270,9 +270,10 @@ Notions élémentaires:
 ---
 
 ### Qt
-Notions élémentaires 2
+Notions élémentaires 2 :
 - Strong versus weak
-
+ - **Strong** -> Garantie que l'objet contenu dans le pointeur ne sera pas détruit tant qu'une autre référence existe
+ - **Weak** -> Ne garantie *pas* que l'objet contenu dans le pointeur sera toujours valide
 ---
 
 #### Pointeurs similaires
@@ -280,8 +281,12 @@ Notions élémentaires 2
 ---
 
 #### QSharedDataPointer
-- Partage de **données**, pas d'un ~~pointeur~~
-- Ce qui implique quelles peuvent être copiées
+- Partage de **données**, pas d'un ~~pointeur~~ sur des données
+- Ce qui implique que ces données peuvent être copiées à travers le *pointer*
+- Thread-safe
+
+#### QSharedDataPointer
+Exemple :
 
 ```c++
 #include <QSharedData>
@@ -294,7 +299,6 @@ public:
     int age;
     QString name;
 };
-
 
 class SimpsonMember
 {
@@ -436,7 +440,9 @@ void foo()
 ---
 
 ### Conclusion
-
+@ul
+MERCI DE VOTRE ATTENTION
+@endul
 ---
 
 ### Référence
