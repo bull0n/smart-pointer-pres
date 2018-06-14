@@ -66,10 +66,15 @@ private:
  - auto_ptr avec C++98
   - Déprecié
  - Utiliser les pointeurs que l'on va vous présenter.
+ - Accéder au pointeur originel avec .get()
 
 ---
 
 #### unique_ptr
+
+- Evolution de auto_ptr
+- Un objet ne peut être que dans un seul unique_ptr
+- Marche
 
 ---
 
@@ -78,6 +83,13 @@ private:
  - Pointeur partagé entre plusieurs objets
  - Sera détruit quand la dernière référence sera détruite
  - /!\ Ne pas créer de smart pointers depuis un pointeurs déjà dans un shared_ptr /!\
+
+```c++
+Sofa* sofa = new Sofa();
+Simpson homer("homer", sofa); // NON !
+```
+
+ - http://en.cppreference.com/w/cpp/memory/shared_ptr
 
 ---
 
@@ -207,7 +219,7 @@ Notions élémentaires 2
 ---
 
 #### QSharedDataPointer
-- Partage de "données", pas d'un ~~"pointeur"~~ sur ces données!!!
+- Partage de **données**, pas d'un ~~pointeur~~
 - Ce qui implique quelles peuvent être copiées
 
 ```c++
@@ -258,18 +270,74 @@ int main()
 ```
 
 ---
-#### QExplicitlySharedDataPointer
-- Identique à QSharedDataPointer à une énorme différences près:
- - Lors que l'on fait une copie de l'objet partagé, NE le copie PAS
+#### `QExplicitlySharedDataPointer`
+- Identique à `QSharedDataPointer` à une énorme différences près:
+ - Lors que l'on fait une copie de l'objet partagé, ne le copie *PAS*
+ - _Possibilité de préciser si l'on veut que les données soient dupliquées avec **detach()**_
 
 ---
 
-#### QScopedPointer
+#### `QScopedPointer`
+- Permet d'assurer qu'un objet sera supprimé à la sortie de la portée dans laquelle il est instancié
+
+Exemple sans
+```c++
+void myFunction(bool useSubClass)
+{
+    MyClass \*p = useSubClass ? new MyClass() : new MySubClass;
+    QIODevice \*device = handsOverOwnership();
+
+    if (m_value > 3) {
+        delete p;
+        delete device;
+        return;
+    }
+
+    try {
+        process(device);
+    } catch (...) {
+        delete p;
+        delete device;
+        throw;
+    }
+
+    delete p;
+    delete device;
+}
+```
+
+---
+#### `QScopedPointer`
+Exemple avec:
+
+```c++
+void myFunction(bool useSubClass)
+{
+    // assuming that MyClass has a virtual destructor
+    QScopedPointer<MyClass> p(useSubClass ? new MyClass() : new MySubClass);
+    QScopedPointer<QIODevice> device(handsOverOwnership());
+
+    if (m_value > 3)
+        return;
+
+    process(device);
+}
+```
 
 ---
 
-#### QScopedArrayPointer
+#### `QScopedArrayPointer`
+- Identique à `QScopedPointer` mais pour des tableaux d'objets
 
+```c++
+void foo()
+{
+    QScopedArrayPointer<int> i(new int[10]);
+    i[2] = 42;
+    ...
+    return; // our integer array is now deleted using delete[]
+}
+```
 ---
 
 ### Exercice
