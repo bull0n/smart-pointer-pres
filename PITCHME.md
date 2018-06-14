@@ -219,7 +219,7 @@ std::weak_ptr<int> gw;
 
 void f()
 {
-    if (auto spt = gw.lock()) { std::cout << *spt << "\n"; }
+    if (auto spt = gw.lock()) { std::cout << \*spt << "\n"; }
     else { std::cout << "gw is expired\n"; }
 }
 
@@ -343,27 +343,31 @@ int main()
 
 Exemple sans
 ```c++
-void myFunction(bool useSubClass)
+void useCanape(bool homer, int chaine)
 {
-    MyClass \*p = useSubClass ? new MyClass() : new MySubClass;
-    QIODevice \*device = handsOverOwnership();
+    Canape \*canape = homer ? new Fauteuil() : new Canape(5);
+    Telecommande \*telecommande = Telecommande::createTelecommande();
 
-    if (m_value > 3) {
-        delete p;
-        delete device;
+    if (chaine < 1) {
+        delete canape;
+        delete telecommande;
         return;
     }
 
     try {
-        process(device);
+        useTelecommande(telecommande);
     } catch (...) {
-        delete p;
-        delete device;
+        delete canape;
+        delete telecommande;
         throw;
     }
 
-    delete p;
-    delete device;
+    delete canape;
+    delete telecommande;
+}
+
+void useTelecommande(Telecommande* telecommande){
+    //Quelque chose qui pourrais lancer une exception !
 }
 ```
 
@@ -372,16 +376,20 @@ void myFunction(bool useSubClass)
 Exemple avec:
 
 ```c++
-void useCanape(bool homer)
+void useCanape(bool homer, int chaine)
 {
     // assuming that MyClass has a virtual destructor
-    QScopedPointer<Canape> p(useSubClass ? new Fauteuil() : new Canape());
-    QScopedPointer<QIODevice> telecommande(handsOverOwnership());
+    QScopedPointer<Canape> p(homer ? new Fauteuil() : new Canape(5));
+    QScopedPointer<Telecommande> telecommande(Telecommande::createTelecommande());
 
-    if (m_value > 3)
+    if (chaine < 1)
         return;
 
-    process(device);
+    useTelecommande(telecommande);
+}
+
+void useTelecommande(QScopedPointer<Telecommande>& telecommande){
+    //Quelque chose qui pourrais lancer une exception !
 }
 ```
 
