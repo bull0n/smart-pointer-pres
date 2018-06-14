@@ -72,6 +72,10 @@ private:
 
 #### unique_ptr
 
+- Evolution de auto_ptr
+- Un objet ne peut être que dans un seul unique_ptr
+- Marche
+
 ---
 
 #### shared_ptr
@@ -226,7 +230,7 @@ int main()
 ```
 
 ---
-#### QExplicitlySharedDataPointer
+#### `QExplicitlySharedDataPointer`
 - Identique à QSharedDataPointer à une énorme différences près:
  - Lors que l'on fait une copie de l'objet partagé, NE le copie PAS
 
